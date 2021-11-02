@@ -52,8 +52,6 @@ public class PriceControllerImplTest {
         Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-
-
     public PriceResponse buidPriceResponse(){
         String str = "2021-04-05 00:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
