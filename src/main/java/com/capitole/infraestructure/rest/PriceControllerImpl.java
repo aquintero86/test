@@ -1,8 +1,8 @@
 package com.capitole.infraestructure.rest;
 
 import com.capitole.application.service.PriceService;
-import com.capitole.controller.model.PriceResponse;
 import com.capitole.domain.PriceRequest;
+import com.capitole.infraestructure.rest.dto.PriceResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 

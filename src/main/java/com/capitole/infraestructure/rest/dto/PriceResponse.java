@@ -1,14 +1,15 @@
-package com.capitole.controller.model;
+package com.capitole.infraestructure.rest.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
+@Builder
 public class PriceResponse {
 
     @JsonProperty("ProductId")
@@ -29,14 +30,5 @@ public class PriceResponse {
     @JsonProperty("FinalPrice")
     private BigDecimal finalPrice;
 
-    public PriceResponse(int productuId, int brandId, int rateToApply, LocalDateTime startDate,
-                         LocalDateTime endDate, BigDecimal finalPrice){
-        this.brandId = brandId;
-        this.productuId = productuId;
-        this.rateToApply = rateToApply;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.finalPrice = finalPrice;
-    }
 
 }

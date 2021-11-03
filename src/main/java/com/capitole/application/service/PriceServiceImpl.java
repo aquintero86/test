@@ -1,23 +1,38 @@
 package com.capitole.application.service;
 
-import com.capitole.controller.model.PriceResponse;
+
 import com.capitole.domain.PriceRequest;
+import com.capitole.infraestructure.repository.PriceRepository;
+import com.capitole.infraestructure.repository.models.PriceModel;
+import com.capitole.infraestructure.rest.dto.PriceResponse;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 
 @Service
 public class PriceServiceImpl implements PriceService{
 
+    private final PriceRepository repository;
+
+    public PriceServiceImpl(PriceRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public PriceResponse getPriceByApplyDate(PriceRequest priceRequest) {
-        String str = "2021-04-05 00:00:00";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-        return new PriceResponse(1,1, 1, dateTime, dateTime, BigDecimal.valueOf(0.0));
+        Iterable<PriceModel> priceModels = repository.findPriceByApplyDate(priceRequest.getProductId(), priceRequest.getBrandId(), priceRequest.getApplyDate());
+        Stream<PriceModel> stream = StreamSupport.stream(priceModels.spliterator(), false);
+        PriceModel priceModel = priceModels.iterator().next();
+        return PriceResponse.builder()
+                    .startDate(priceModel.getStartDate())
+                    .endDate(priceModel.getEndDate())
+                    .rateToApply(priceModel.getPriceList())
+                    .productuId(priceModel.getProductId())
+                    .brandId(priceModel.getBrandId())
+                            .finalPrice(priceModel.getPrice())
+         .build();
     }
 }
